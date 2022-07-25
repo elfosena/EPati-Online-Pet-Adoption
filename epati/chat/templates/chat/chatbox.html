@@ -1,0 +1,138 @@
+<div class="container" id="chatbox">
+    <div class="messaging">
+        <div class="inbox_msg">
+          <div class="inbox_people">
+            <div class="headind_srch">
+              <div class="recent_heading">
+                <h4>Recent</h4>
+              </div>
+              <div class="srch_bar">
+                <div class="stylish-input-group">
+                  <input type="text" class="search-bar"  placeholder="Search" >
+                  </div>
+              </div>
+            </div>
+            <div class="inbox_chat scroll" id="inbox-refresh">
+            {% for thread in threads %}
+    
+                {% if wanted_thread %}
+                {% if wanted_thread == thread %}
+                    <div class="chat_list active_chat " chat-id="chat_{{ thread.id }}" style="cursor: pointer" onclick="changeThread(this)">
+                        <div class="chat_people">
+                        <div class="chat_img" style="cursor: pointer;"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                        <div class="chat_ib">
+                            {% if thread.first_user == user %}
+                            <h5>{{ thread.second_user.username }}
+                            {% else %}
+                            <h5>{{ thread.first_user.username }}
+                            {% endif %}
+                            <span class="chat_date">{{ thread.updated|date:"d M" }}</span></h5>
+                            <p>{{thread.chatmessage_thread.last.message}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="chat_list" chat-id="chat_{{ thread.id }}" style="cursor: pointer" onclick="changeThread(this)">
+                        <div class="chat_people">
+                        <div class="chat_img" style="cursor: pointer;"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                        <div class="chat_ib">
+                            {% if thread.first_user == user %}
+                            <h5>{{ thread.second_user.username }}
+                            {% else %}
+                            <h5>{{ thread.first_user.username }}
+                            {% endif %}
+                            <span class="chat_date">{{ thread.updated|date:"d M" }}</span></h5>
+                            <p>{{thread.chatmessage_thread.last.message}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="chat_list{% if forloop.first %} active_chat{% endif %}" chat-id="chat_{{ thread.id }}" style="cursor: pointer" onclick="changeThread(this)">
+                    <div class="chat_people">
+                    <div class="chat_img" style="cursor: pointer;"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="chat_ib">
+                        {% if thread.first_user == user %}
+                        <h5>{{ thread.second_user.username }}
+                        {% else %}
+                        <h5>{{ thread.first_user.username }}
+                        {% endif %}
+                        <span class="chat_date">{{ thread.updated|date:"d M" }}</span></h5>
+                        <p>{{thread.chatmessage_thread.last.message}}</p>
+                    </div>
+                    </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+    
+          <div class="mesgs" id="mesgs-refresh">
+            {% for thread in threads %}
+                <div class="mydiv 
+                {% if wanted_thread %} 
+                    {% if thread == wanted_thread%}
+                        hide is_active
+                    {% else %}
+                        hide
+                    {% endif %}
+                {% elif forloop.first %}hide is_active {% else %}hide{% endif %}" chat-id="chat_{{ thread.id }}" 
+                
+                other-user-id="
+                {% if thread.first_user == user %}
+                    {{ thread.second_user.id }}
+                {% else %}
+                    {{ thread.first_user.id }}
+                {% endif %}">
+                
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <div class="chat_people">
+                            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="chat_ib">
+                                {% if thread.first_user == user %}
+                                <h4>{{ thread.second_user.username }}
+                                {% else %}
+                                <h4>{{ thread.first_user.username }}
+                                {% endif %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="msg_history" id="msg_history" chat-id="chat_{{ thread.id }}">
+    
+            {% for chat in thread.chatmessage_thread.all %}
+    
+                {% if chat.user != user %}
+                <div class="incoming_msg">
+                    <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="received_msg">
+                    <div class="received_withd_msg">
+                        <p>{{chat.message}}</p>
+                        <span class="time_date">{{ chat.timestamp|date:"d M" }}    |    {{ chat.timestamp|time:"H:i" }}</span></div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="outgoing_msg">
+                    <div class="sent_msg">
+                        <p>{{chat.message}}</p>
+                        <span class="time_date">{{ chat.timestamp|date:"d M" }}    |    {{ chat.timestamp|time:"H:i" }}</span></div>
+                </div>
+                {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+          {% endfor %}
+          <div class="type_msg">
+            <div class="input_msg_write">
+                <input type="text" class="write_msg" id="write_msg" placeholder="Type a message" />
+                <button class="msg_send_btn" value="{{user.id}}" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,112 @@
+<div id="search_result">
+    <div class="content-top ">
+        <div class="container ">
+            <div class="spec ">
+                <h3>Recently Added</h3>
+                <div class="ser-t">
+                    <b></b>
+                    <span><i></i></span>
+                    <b class="line"></b>
+                </div>
+            </div>
+                <div class="tab-head ">
+                    <nav class="nav-sidebar">
+                        <ul class="nav tabs ">
+                          <li class="active"><a href="#tab1" data-toggle="tab">Dogs</a></li>
+                          <li class=""><a href="#tab2" data-toggle="tab">Cats</a></li> 
+                          <li class=""><a href="#tab3" data-toggle="tab">Others</a></li>  
+                        </ul>
+                    </nav>
+                    <div class=" tab-content tab-content-t ">
+                        <div class="tab-pane active text-style" id="tab1">
+                            <div class=" con-w3l">
+    
+                                {% for pet in dog_list %}
+                                <div class="col-md-3 m-wthree">
+                                    <div class="col-m">								
+                                        <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
+                                            <img src="{{pet.image.url}}" class="img-responsive-2" alt="">
+                                        </a>
+                                        <div class="mid-1">
+                                            <div class="women">
+                                                <h2><a href={% url "adopt:detail" pet.id %}>{{pet.name}}</a></h2>	
+                                                <p><em class="item_price">{{pet.kind}}</em><p/>							
+                                            </div>
+                                            <div class="mid-2">
+                                                <br><em class="item_price">{{pet.sex}}, {{pet.age}}</em></br>
+                                                
+                                                <p ><em class="item_price">{{pet.breed}}</em></p>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <a href={% url "adopt:detail" pet.id %}><button class="btn btn-info">Info</button></a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="clearfix"></div>
+                             </div>
+                        </div>
+                        <div class="tab-pane  text-style" id="tab2">
+                            <div class=" con-w3l">
+                                {% for pet in cat_list %}
+                                <div class="col-md-3 m-wthree">
+                                    <div class="col-m">								
+                                        <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
+                                            <img src="{{pet.image.url}}" class="img-responsive-2" alt="">
+                                        </a>
+                                        <div class="mid-1">
+                                            <div class="women">
+                                                <h2><a href={% url "adopt:detail" pet.id %}>{{pet.name}}</a></h2>	
+                                                <p><em class="item_price">{{pet.kind}}</em><p/>							
+                                            </div>
+                                            <div class="mid-2">
+                                                <br><em class="item_price">{{pet.sex}}, {{pet.age}}</em></br>
+                                                
+                                                <p ><em class="item_price">{{pet.breed}}</em></p>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <a href={% url "adopt:detail" pet.id %}><button class="btn btn-info">Info</button></a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="clearfix"></div>
+                             </div>		  
+                        </div>
+                        <div class="tab-pane  text-style" id="tab3">
+                            <div class=" con-w3l">
+                                {% for pet in other_list %}
+                                <div class="col-md-3 m-wthree">
+                                    <div class="col-m">								
+                                        <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
+                                            <img src="{{pet.image.url}}" class="img-responsive-2" alt="">
+                                        </a>
+                                        <div class="mid-1">
+                                            <div class="women">
+                                                <h2><a href={% url "adopt:detail" pet.id %}>{{pet.name}}</a></h2>	
+                                                <p><em class="item_price">{{pet.kind}}</em><p/>							
+                                            </div>
+                                            <div class="mid-2">
+                                                <br><em class="item_price">{{pet.sex}}, {{pet.age}}</em></br>
+                                                
+                                                <p ><em class="item_price">{{pet.breed}}</em></p>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <a href={% url "adopt:detail" pet.id %}><button class="btn btn-info">Info</button></a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                {% endfor %}
+                                <div class="clearfix"></div>
+                            </div>		  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

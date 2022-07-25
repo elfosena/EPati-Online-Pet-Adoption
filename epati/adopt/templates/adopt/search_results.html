@@ -1,0 +1,98 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<div id="search_result">
+<div class="product">
+	<div class="container">
+		<div class="spec ">
+			<h3>{{kind}}s</h3>
+			<div class="ser-t">
+				<b></b><span><i></i></span>
+				<b class="line"></b>
+			</div>
+		</div>
+		<div class=" con-w3l agileinf">
+			{% for pet in pet_list %}
+			<div class="col-md-3 m-wthree">
+				<div class="col-m">								
+					<a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
+						<img src="/media/{{pet.image}}" class="img-responsive-2" alt="">
+					</a>
+					<div class="mid-1">
+						<div class="women">
+							<h6><a href="{% url "adopt:detail" pet.id %}">{{pet.name}}</a></h6>							
+						</div>
+						<div class="mid-2">
+							<br><em class="item_price">{{pet.sex}}, {{pet.age}}</em></br>		
+							<p ><em class="item_price">{{pet.breed}}</em></p>
+								<div class="clearfix"></div>
+						</div>
+						<a href="{% url "adopt:detail" pet.id %}"><button class="btn btn-info">Info</button></a>
+							{% if kind == 'My Pet' %}
+								<a href={% url "adopt:update_pet" pet.id %}><button class="btn btn-success">Update</button></a>
+								<a href={% url "adopt:delete_pet" pet.id %}><button class="btn btn-danger">Delete</button></a>
+							{% endif %}
+						</div>
+					</div>
+					<br></br>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+		<nav>
+			<ul class="pagination">
+				{% if pet_list.number != 1 %}
+					{% if kind == "My Pet" %}
+					<li><a href="{% url 'adopt:my_pets' %}?page=1" aria-label="First"><span aria-hidden="true">«</span></a></li>
+					{% elif kind == "All Pet" %}
+					<li><a href="{% url 'adopt:pets' %}?page=1" aria-label="First"><span aria-hidden="true">«</span></a></li>
+					{% elif kind == "Favorite Pet" %}
+					<li><a href="{% url 'adopt:favorite_pets' %}?page=1" aria-label="First"><span aria-hidden="true">«</span></a></li>
+					{% else %}
+					<li><a href="{% url 'adopt:pets_kind' kind %}?page=1" aria-label="First"><span aria-hidden="true">«</span></a></li>
+					{% endif %}	
+				{% else %}
+				<li class="disabled"><a href="#" aria-label="First"><span aria-hidden="true">«</span></a></li>
+				{% endif %}
+
+				{% if pet_list.has_previous %}
+			  	<li><a href="{% url 'adopt:pets'%}?page={{pet_list.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">‹</span></a></li>
+				{% else %}
+				<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">‹</span></a></li>
+				{% endif %}
+
+				{% for num in pet_list.paginator.page_range %}
+					{% if num == pet_list.number %}
+					<li class="active"><a href="{% url 'adopt:pets' %}?page={{num}}">{{num}}<span class="sr-only">(current)</span></a></li>
+					{% elif num <= pet_list.number|add:2 and num >= pet_list.number|add:-2 %}
+					<li><a href="{% url 'adopt:pets' %}?page={{num}}">{{num}}</a></li>
+					{% elif pet_list.number <= 2 and num <= 5 %}
+					<li><a href="{% url 'adopt:pets' %}?page={{num}}">{{num}}</a></li>
+					{% elif pet_list.number >= 4 and num >= pet_list.paginator.num_pages|add:-4 %}
+					<li><a href="{% url 'adopt:pets' %}?page={{num}}">{{num}}</a></li>
+					{% endif %}
+				{% endfor %}
+				
+				{% if pet_list.has_next %}
+				<li><a href="{% url 'adopt:pets' %}?page={{pet_list.next_page_number}}" aria-label="Next"><span aria-hidden="true">›</span></a></li>
+				{% else %}
+				<li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">›</span></a></li>
+				{% endif %}
+
+				{% if pet_list.number != pet_list.paginator.num_pages %}
+					{% if kind == "My Pet" %}
+					<li><a href="{% url 'adopt:my_pets' %}?page={{pet_list.paginator.num_pages}}" aria-label="First"><span aria-hidden="true">»</span></a></li>
+					{% elif kind == "All Pet" %}
+					<li><a href="{% url 'adopt:pets' %}?page={{pet_list.paginator.num_pages}}" aria-label="First"><span aria-hidden="true">»</span></a></li>
+					{% elif kind == "favorite Pet" %}
+					<li><a href="{% url 'adopt:favorite_pets' %}?page={{pet_list.paginator.num_pages}}" aria-label="First"><span aria-hidden="true">»</span></a></li>
+					{% else %}
+					<li><a href="{% url 'adopt:pets_kind' kind %}?page={{pet_list.paginator.num_pages}}" aria-label="First"><span aria-hidden="true">»</span></a></li>
+					{% endif %}	
+				{% else %}
+				<li class="disabled"><a href="#" aria-label="Last"><span aria-hidden="true">»</span></a></li>
+				{% endif %}
+		   </ul>
+		 </nav>	
+	</div>
+</div>
+</div>
