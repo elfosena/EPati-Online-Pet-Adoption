@@ -103,39 +103,13 @@ class SearchView(BaseView):
         search_type = request.POST.get('search_type')
 
         if len(search_str) == 0:
-            if search_type == "Recently Added":
-                self.context.update({
-                    'dog_list': Pet.recent_dog_list(),
-                    'cat_list': Pet.recent_cat_list(),
-                    'other_list' : Pet.recent_other_list(),
-                })
-                return render(request, 'adopt/recently_added.html', self.context)
+            self.context.update({
+                'dog_list': Pet.recent_dog_list(),
+                'cat_list': Pet.recent_cat_list(),
+                'other_list' : Pet.recent_other_list(),
+            })
+            return render(request, 'adopt/recently_added.html', self.context)
 
-            elif search_type == "All Pet":
-                pet_list = Pet.get_listings()
-                self.context.update({
-                    'kind': 'All Pet',
-                    'pet_list': pet_list,
-                })
-                return render(request, 'adopt/search_results.html', self.context)
-            
-            elif search_type == "My Pet":
-                pet_list = pagination_helper(Pet.get_listings().filter(published_by=request.user), request.GET.get('page', 1), 12)
-
-                self.context.update({
-                    'pet_list': pet_list,
-                    'kind': "My Pet",
-                })
-                return render(request, 'adopt/search_results.html', self.context)
-
-            else:
-                kind = get_object_or_404(Kind, search_type)
-                pet_list = Pet.get_listings().filter(kind=kind)
-                self.context.update({
-                    'kind': kind.name,
-                    'pet_list': pet_list,
-                })
-                return render(request, 'adopt/search_results.html', self.context)
         else:
             search_results = Pet.get_listings().filter(Q(name__icontains=search_str) |        
                 Q(description__icontains=search_str) | 
